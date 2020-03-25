@@ -14,9 +14,9 @@ public class Main {
     }
 
     public static void selectionSort(double[] array) {
-        for (int indexOuter = 0; indexOuter < array.length; indexOuter++) {
+        for (int indexOuter = 0; indexOuter < array.length - 1; indexOuter++) {
             int min_index = indexOuter;
-            for(int indexInner = indexOuter + 1; indexInner < array.length; indexInner++) {
+            for (int indexInner = indexOuter + 1; indexInner < array.length; indexInner++) {
                 if (array[indexInner] < array[min_index]) {
                     min_index = indexInner;
                 }
@@ -25,23 +25,42 @@ public class Main {
         }
     }
 
+    public static void bubbleSort(double[] array) {
+        for (int indexOuter = 0; indexOuter < array.length - 1; indexOuter++) {
+            for (int indexInner = 0; indexInner < array.length - 1; indexInner++) {
+                if (array[indexInner] > array[indexInner + 1]) {
+                    swap(array[indexInner], array[indexInner + 1]);
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean isExit = false;
+        double[] testArray;
+        StopWatch sortTime = new StopWatch();
 
         do {
-            System.out.println("Enter 'start' to begin measure the execute time of selection sort");
+            System.out.println("Enter 'startSelection' to begin measure the execute time of selection sort 100000 double");
+            System.out.println("Enter 'startBubble' to begin measure the execute time of bubble sort 100000 double");
             System.out.println("Enter 'exit' to exit the program!");
             System.out.print("Enter here: ");
             String choice = scanner.nextLine();
-            if (choice.equals("start")) {
-                double[] testArray = new double[100000];
+            if (choice.equals("startSelection")) {
+                testArray = new double[100000];
                 addRandomElement(testArray);
-                StopWatch sortTime = new StopWatch();
                 sortTime.start();
                 selectionSort(testArray);
                 sortTime.stop();
                 System.out.println("Time of selection sort is: " + sortTime.getElapsedTime() + "\n");
+            } else if (choice.equals("startBubble")) {
+                testArray = new double[100000];
+                addRandomElement(testArray);
+                sortTime.start();
+                bubbleSort(testArray);
+                sortTime.stop();
+                System.out.println("Time of bubble sort is: " + sortTime.getElapsedTime() + "\n");
             } else if (choice.equals("exit")) {
                 System.out.println("Exit program!");
                 isExit = true;
